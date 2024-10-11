@@ -26,5 +26,6 @@ mkdir logs
 while IFS=',' read -r R1; do
 	echo "Merging $R1 with read 2"
 	vsearch --fastq_mergepairs ${R1} --reverse ${R1/1.fq.gz/2.fq.gz} --fastqout ${R1/1.fq.gz/merge.fq} --fastq_allowmergestagger --log logs/${R1/1.fq.gz/merge.log};
+	gzip ${R1/1.fq.gz/merge.fq}
 done < "$fname"
 

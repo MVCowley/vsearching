@@ -22,10 +22,20 @@ fi
 echo "Creating dir for logs..."
 mkdir logs
 
+# Define pattern and replacement
+pattern="1.fq.gz"
+replacement="2.fq.gz"
+
 # Loop over files in the csv supplied
 while IFS=',' read -r R1; do
-	echo "Merging $R1 with read 2"
-	vsearch --fastq_mergepairs ${R1} --reverse ${R1/1.fq.gz/2.fq.gz} --fastqout ${R1/1.fq.gz/merge.fq} --fastq_allowmergestagger --log logs/${R1/1.fq.gz/merge.log};
-	gzip ${R1/1.fq.gz/merge.fq}
+	R2="${R1/$pattern/$replacement}"
+
+	if [[ -f "$R2" ]]; then
+		echo "Merging $R1 with $R2"
+		vsearch --fastq_mergepairs ${R1} --reverse ${R1/$pattern/$replacement} --fastqout ${R1/$pattern/merge.fq} --fastq_allowmergestagger --log logs/${R1/$pattern/merge.log};
+		gzip ${R1/$pattern/merge.fq}
+	else
+		echo "Read pair $R2 for $R1 not found."
+	fi
 done < "$fname"
 

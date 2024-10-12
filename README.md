@@ -32,7 +32,7 @@ WWM_N63_CD8_1.fq.gz
 ```
 
 > [!IMPORTANT]
-> Both read 1 and read 2 must be in the same directory and have matching names except for `_1.fq.gz` and `_2.fq.gz` to denote the read number.
+> Both read 1 and read 2 must be in the same directory and have matching names except for (by default) `_1.fq.gz` and `_2.fq.gz` to denote the read number.
 
 Check the output in logs easily with `grep "Merged" *.log` to see statistics on the lines successfully merged per file.
 
